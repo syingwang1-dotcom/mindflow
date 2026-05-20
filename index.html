@@ -347,10 +347,6 @@ button{cursor:pointer;border:none;background:none;color:inherit}
     <div class="setting-group" style="margin-top:20px">
       <h3>数据</h3>
       <div class="setting-row"><div style="font-size:13px">当前存储 <span id="dataCount">0</span> 条会话 · <span id="thoughtCount">0</span> 条思绪</div></div>
-      <div class="setting-row"><div style="font-size:12px;color:var(--text3);display:flex;justify-content:space-between;align-items:center"><span>☁️ 云同步</span><span id="syncStatus">未同步</span></div></div>
-      <div style="display:flex;gap:6px;margin-bottom:6px;margin-top:4px">
-        <button class="btn-add" onclick="App.syncFromCloud(false)" style="flex:1;text-align:center" id="btnSyncManual">🔄 从云端同步</button>
-      </div>
       <button class="btn-danger" onclick="App.clearAllData()">清除所有数据</button>
     </div>
   </div>
@@ -496,8 +492,6 @@ const DEFAULT_QUOTES = [
   "记录我的成功",
 ];
 
-const SUPABASE_URL = 'https://djxjbgztyrwzmgipawvb.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRqeGpiZ3p0eXJ3em1naXBhd3ZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkxNzY0MzIsImV4cCI6MjA5NDc1MjQzMn0.TtBZ0auVSnCKETsBUSUK-ufn8lU5Sz4gGxHNaqQlr54';
 
 const PROMPT_TEMPLATE = `你是「小悟」，一位温暖而敏锐的思维伙伴与认知分析师。
 
@@ -617,7 +611,6 @@ const App = {
     this.renderSparkBadge();
     this.renderHomeSuccess();
     this.checkDailySuccess();
-    this.syncFromCloud();
   },
 
   /* ─── Data ─── */
@@ -640,90 +633,10 @@ const App = {
   },
   saveData() {
     this.saveLocal();
-    this.pushToCloud();
   },
   saveLocal() {
     try { localStorage.setItem('mindflow_data', JSON.stringify({ sessions: this.state.sessions, settings: this.state.settings })); } catch(e) { this.toast('存储空间不足'); }
   },
-  /* ─── Cloud Sync ─── */
-  async syncFromCloud(silent=true) {
-    try {
-      if (!silent) { this._syncing = true; this.updateSyncStatus(); }
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/mindflow_data?id=eq.1`, {
-        headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-      });
-      if (!res.ok) { if (!silent) this.toast('同步失败：无法连接云端'); return; }
-      const rows = await res.json();
-      if (rows?.[0]?.data) {
-        const cd = rows[0].data;
-        if (cd.sessions || cd.settings) {
-          this.mergeCloudData(cd);
-          this.saveLocal();
-          this._lastSync = Date.now(); this.updateSyncStatus();
-          this.renderQuote(); this.renderReview(); this.renderSettings();
-          this.renderHomePending(); this.renderSparkBadge(); this.renderHomeSuccess();
-          if (!silent) this.toast('✅ 已从云端同步');
-        } else {
-          if (!silent) this.toast('云端暂无数据');
-        }
-      } else {
-        if (!silent) this.toast('云端暂无数据');
-      }
-    } catch(e) {
-      console.warn('Cloud sync:', e);
-      if (!silent) this.toast('同步失败：网络错误，请检查网络');
-    } finally {
-      if (!silent) { this._syncing = false; this.updateSyncStatus(); }
-    }
-  },
-  mergeCloudData(cloudData) {
-    // Merge sessions by ID, latest version wins
-    const sessionsMap = new Map();
-    const localSessions = this.state.sessions || [];
-    const cloudSessions = cloudData.sessions || [];
-    for (const ses of localSessions) sessionsMap.set(ses.id, ses);
-    for (const ses of cloudSessions) {
-      const existing = sessionsMap.get(ses.id);
-      if (!existing) { sessionsMap.set(ses.id, ses); continue; }
-      const existingTime = new Date(existing.endTime || existing.startTime).getTime();
-      const cloudTime = new Date(ses.endTime || ses.startTime).getTime();
-      if (cloudTime > existingTime) sessionsMap.set(ses.id, ses);
-    }
-    this.state.sessions = [...sessionsMap.values()].sort((a,b) => new Date(b.startTime)-new Date(a.startTime));
-    // Merge settings: quotes as union, local takes priority for runtime state
-    if (cloudData.settings) {
-      const localQuotes = this.state.settings?.quotes || [];
-      const cloudQuotes = cloudData.settings?.quotes || [];
-      const mergedQuotes = [...localQuotes];
-      for (const q of cloudQuotes) {
-        if (!mergedQuotes.includes(q)) mergedQuotes.push(q);
-      }
-      // Cloud as base, local overrides (preserves device-specific runtime state)
-      this.state.settings = { ...cloudData.settings, ...this.state.settings };
-      if (mergedQuotes.length) this.state.settings.quotes = mergedQuotes;
-    }
-  },
-  pushToCloud() {
-    if (this._cpt) clearTimeout(this._cpt);
-    this._cpt = setTimeout(() => {
-      fetch(`${SUPABASE_URL}/rest/v1/mindflow_data`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Prefer': 'resolution=merge-duplicates'
-        },
-        body: JSON.stringify({
-          id: 1,
-          data: { sessions: this.state.sessions, settings: this.state.settings },
-          updated_at: new Date().toISOString()
-        })
-      }).then(() => { this._lastSync = Date.now(); this.updateSyncStatus(); }).catch(() => {});
-    }, 800);
-  },
-
-  /* ─── Quotes ─── */
   ensureQuotes() { if (!this.state.settings.quotes||!this.state.settings.quotes.length) { this.state.settings.quotes = [...DEFAULT_QUOTES]; this.saveData(); } },
   getDailyQuote() {
     const qs = this.state.settings.quotes; if (!qs.length) return {text:'',idx:-1};
@@ -1081,7 +994,6 @@ const App = {
   renderSettings() {
     document.getElementById('dataCount').textContent=this.state.sessions.length;
     document.getElementById('thoughtCount').textContent=this.getAllThoughts().length;
-    this.updateSyncStatus();
     const ql=document.getElementById('quoteList');
     if(!this.state.settings.quotes.length){ql.innerHTML='<div style="font-size:12px;color:var(--text3);padding:8px">暂无语录</div>';return;}
     ql.innerHTML=this.state.settings.quotes.map((q,i)=>`<div class="quote-item"><span class="q-text">${i+1}. ${this.esc(q)}</span><span class="q-del" onclick="App.deleteQuoteSetting(${i})">✕</span></div>`).join('');
@@ -1089,14 +1001,6 @@ const App = {
   deleteQuoteSetting(i){this.state.settings.quotes.splice(i,1);if(!this.state.settings.quotes.length)this.state.settings.quotes=['✨ 添加你的第一句语录'];this.saveData();this.renderSettings();this.renderQuote();},
   addQuote(){const inp=document.getElementById('newQuoteInput'),t=inp.value.trim();if(!t)return;this.state.settings.quotes.push(t);this.saveData();inp.value='';this.renderSettings();this.renderQuote();this.toast('语录已添加');},
   clearAllData(){if(confirm('确定清除？语录会保留。')){const q=this.state.settings.quotes;this.state.sessions=[];this.state.settings={quotes:q||DEFAULT_QUOTES};this.saveData();this.renderSettings();this.renderHomePending();this.renderSparkBadge();this.renderHomeSuccess();this.toast('数据已清除');}},
-  updateSyncStatus() {
-    const el=document.getElementById('syncStatus');
-    if(!el) return;
-    if(this._syncing) { el.textContent='同步中...'; return; }
-    if(!this._lastSync) { el.textContent='未同步'; return; }
-    const s=Math.floor((Date.now()-this._lastSync)/1000);
-    el.textContent=s<60?'刚刚同步':s<3600?`${Math.floor(s/60)} 分钟前同步`:s<86400?`${Math.floor(s/3600)} 小时前同步`:`${Math.floor(s/86400)} 天前同步`;
-  },
 
   /* ─── Helpers ─── */
   catLabel(c){return{life:'生活心情',sports:'运动',study:'学习',work:'工作'}[c]||c;},
