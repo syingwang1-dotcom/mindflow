@@ -218,6 +218,56 @@ button{cursor:pointer;border:none;background:none;color:inherit}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* Review Grid */
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:4px 0}
+.review-grid-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;transition:.15s;min-height:110px;user-select:none}
+.review-grid-item:active{transform:scale(0.97)}
+.review-grid-item .name{font-size:16px;font-weight:600;color:var(--text)}
+.review-grid-item .count{font-size:12px;color:var(--text3)}
+.review-grid-item .count em{font-style:normal;font-size:20px;font-weight:700;color:var(--text2)}
+/* Overlay */
+.review-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;align-items:center;justify-content:center;padding:20px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.review-overlay.active{display:flex}
+.review-modal{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);width:100%;max-width:460px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.review-modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.review-modal-title{font-size:16px;font-weight:700;color:var(--text)}
+.review-modal-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.review-toggle-btn{padding:6px 14px;border-radius:var(--radius-full);font-size:12px;font-weight:600;color:var(--accent-review);background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.2);cursor:pointer;transition:.2s;white-space:nowrap}
+.review-toggle-btn:active{background:rgba(139,92,246,0.18)}
+.review-close-btn{font-size:20px;color:var(--text3);cursor:pointer;padding:2px 6px;line-height:1;transition:.2s;background:none;border:none;border-radius:6px}
+.review-close-btn:active{background:var(--surface2);color:var(--text)}
+/* Modal body */
+.review-modal-body{flex:1;overflow-y:auto;padding:20px 20px 8px;min-height:180px}
+/* Card */
+.review-card-container{position:relative;width:100%;touch-action:pan-y}
+.review-card{background:var(--surface2);border-radius:var(--radius-sm);padding:28px 24px;min-height:160px;display:flex;flex-direction:column;gap:12px;transition:transform .25s ease,opacity .25s ease}
+.review-card-text{font-size:15px;line-height:1.8;color:var(--text);flex:1;word-break:break-word}
+.review-card-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:11px;color:var(--text3);margin-top:4px}
+.review-card-type{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.3px}
+.review-card-type-spark{background:rgba(245,158,11,0.12);color:var(--accent-focus)}
+.review-card-type-journal{background:rgba(139,92,246,0.12);color:var(--accent-review)}
+.review-card-type-success{background:rgba(52,211,153,0.12);color:var(--cat-sports)}
+/* Navigation */
+.review-nav-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding:0 4px}
+.review-nav-btn{padding:8px 16px;border-radius:var(--radius-full);font-size:14px;color:var(--text2);background:var(--surface2);border:1px solid var(--border);cursor:pointer;transition:.2s;min-width:44px;text-align:center}
+.review-nav-btn:active{background:var(--border)}
+.review-nav-btn:disabled{opacity:.25;pointer-events:none}
+.review-nav-pos{font-size:12px;color:var(--text3);flex-shrink:0}
+/* Dots */
+.review-nav-dots{display:flex;justify-content:center;gap:5px;padding:10px 20px 16px;flex-shrink:0;flex-wrap:wrap}
+.review-nav-dot{width:6px;height:6px;border-radius:50%;background:var(--border);transition:.25s;flex-shrink:0}
+.review-nav-dot.active{background:var(--accent-review);width:18px;border-radius:3px}
+/* List view */
+.review-list{display:flex;flex-direction:column;gap:8px}
+.review-list-item{background:var(--surface2);border-radius:var(--radius-sm);padding:14px 16px;border:1px solid var(--border)}
+.review-list-item .text{font-size:14px;line-height:1.6;color:var(--text)}
+.review-list-item .meta{font-size:11px;color:var(--text3);margin-top:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.review-empty{text-align:center;color:var(--text3);font-size:13px;padding:40px 20px}
+/* Swipe animation */
+.review-card.slide-out-left{transform:translateX(-40px);opacity:0}
+.review-card.slide-out-right{transform:translateX(40px);opacity:0}
+
 </style>
 </head>
 <body>
@@ -273,17 +323,9 @@ button{cursor:pointer;border:none;background:none;color:inherit}
 
   <!-- Sparks Review -->
   <div class="view" id="viewSparks">
-    <div class="sparks-header">
-      <button class="btn-back" onclick="App.navigate('viewHome')">← 返回</button>
-      <div class="view-title" style="margin-bottom:0">思绪回顾</div>
-    </div>
-    <div class="view-sub" style="margin-top:-8px">所有火花 · 随笔 · 成功记录</div>
-    <div class="export-bar">
-      <button class="btn-export" id="btnExportAll" onclick="App.exportAll()">📋 复制全部（按日期整理）</button>
-      <button class="btn-export" id="btnExportFlat" onclick="App.exportFlat()">📋 复制摘要（按分类精简）</button>
-    </div>
-    <div class="sparks-filter-row" id="thoughtFilters"></div>
-    <div id="sparkReviewList"><div class="no-sparks-msg">还没有记录</div></div>
+    <div class="view-title">思绪回顾</div>
+    <div class="view-sub">回顾你的思绪与记录</div>
+    <div class="review-grid" id="reviewGrid"></div>
   </div>
 
   <!-- Review -->
@@ -456,6 +498,30 @@ button{cursor:pointer;border:none;background:none;color:inherit}
     </div>
   </div>
 
+  <!-- Review Modal -->
+  <div class="review-overlay" id="reviewOverlay" onclick="App.closeReviewModal()">
+    <div class="review-modal" onclick="event.stopPropagation()">
+      <div class="review-modal-header">
+        <span class="review-modal-title" id="reviewModalTitle"></span>
+        <div class="review-modal-actions">
+          <button class="review-toggle-btn" id="reviewToggleViewBtn" onclick="App.toggleReviewView()">全局浏览</button>
+          <button class="review-close-btn" onclick="App.closeReviewModal()">&#10005;</button>
+        </div>
+      </div>
+      <div class="review-modal-body" id="reviewModalBody">
+        <div class="review-card-container" id="reviewCardContainer">
+          <div class="review-card" id="reviewCard"></div>
+        </div>
+        <div class="review-nav-row" id="reviewNavRow">
+          <button class="review-nav-btn" id="reviewPrevBtn" onclick="App.prevReviewCard()">←</button>
+          <span class="review-nav-pos" id="reviewNavPos"></span>
+          <button class="review-nav-btn" id="reviewNextBtn" onclick="App.nextReviewCard()">→</button>
+        </div>
+        <div class="review-list" id="reviewListView" style="display:none"></div>
+      </div>
+      <div class="review-nav-dots" id="reviewNavDots"></div>
+    </div>
+  </div>
   <!-- Toast -->
   <div class="toast" id="toast"></div>
 
@@ -778,7 +844,7 @@ const App = {
     if(viewId==='viewReview') { document.getElementById(viewId).scrollTop=0; this.renderReview(); }
     if(viewId==='viewSettings') this.renderSettings();
     if(viewId==='viewHome'){this.renderHomePending();this.renderHomeSuccess();this.renderQuote();}
-    if(viewId==='viewSparks') this.renderSparksReview();
+    if(viewId==='viewSparks') this.renderReviewGrid();
   },
 
   /* ─── Home ─── */
@@ -801,43 +867,134 @@ const App = {
     return dh<1?'刚刚':dh<24?dh+' 小时前':Math.floor(dh/24)+' 天前';
   },
 
-  /* ─── Sparks Review + Export ─── */
-  renderSparksReview() { this.renderFilters(); this.renderSparksList(); },
-  renderFilters() {
-    const all=this.getAllThoughts(); const cur=this.state.thoughtFilter||'all';
-    const cnt={};
-    all.forEach(s=>{
-      if(s.type==='success') cnt.success=(cnt.success||0)+1;
-      else if(s.category) cnt[s.category]=(cnt[s.category]||0)+1;
+  /* ─── Review Grid ─── */
+  renderReviewGrid() {
+    const all=this.getAllThoughts();
+    const grid=document.getElementById('reviewGrid');
+    const counts={life:0,sports:0,study:0,work:0,success:0};
+    all.forEach(t=>{
+      if(t.type==='success') counts.success++;
+      else if(t.category&&counts[t.category]!==undefined) counts[t.category]++;
     });
-    document.getElementById('thoughtFilters').innerHTML=[
-      {k:'all',l:`全部 (${all.length})`},
-      {k:'life',l:`💕生活 (${cnt.life||0})`},
-      {k:'sports',l:`🏃运动 (${cnt.sports||0})`},
-      {k:'study',l:`📖学习 (${cnt.study||0})`},
-      {k:'work',l:`💼工作 (${cnt.work||0})`},
-      {k:'success',l:`🌟成功 (${cnt.success||0})`},
-    ].map(f=>`<div class="chip ${cur===f.k?'active':''}" onclick="App.setFilter('${f.k}')">${f.l}</div>`).join('');
+    const cats=[
+      {k:'life',l:'生活心情'},
+      {k:'sports',l:'运动'},
+      {k:'study',l:'学习'},
+      {k:'work',l:'工作'},
+      {k:'success',l:'成功'},
+    ];
+    const total=cats.reduce((s,c)=>s+counts[c.k],0);
+    if(!total){grid.innerHTML='<div class="review-empty" style="grid-column:1/-1">还没有记录，开始记录你的思绪吧</div>';return;}
+    grid.innerHTML=cats.map(c=>`<div class="review-grid-item" onclick="App.openReviewCategory('${c.k}')"><div class="name">${c.l}</div><div class="count"><em>${counts[c.k]}</em> 条</div></div>`).join('');
   },
-  setFilter(k){this.state.thoughtFilter=k;this.renderSparksReview();},
-  getFilteredThoughts() {
-    const f=this.state.thoughtFilter||'all';
-    if(f==='success') return this.getAllThoughts().filter(s=>s.type==='success');
-    if(f!=='all') return this.getAllThoughts().filter(s=>s.category===f);
-    return this.getAllThoughts();
+
+  /* ─── Review Modal ─── */
+  openReviewCategory(cat) {
+    const all=this.getAllThoughts();
+    let items;
+    if(cat==='success') items=all.filter(t=>t.type==='success');
+    else items=all.filter(t=>t.category===cat);
+    if(!items.length){this.toast('暂无记录');return;}
+    this._reviewItems=items;
+    this._reviewIndex=0;
+    this._reviewViewMode='card';
+    this._reviewCategory=cat;
+    document.getElementById('reviewModalTitle').textContent=this.catLabel(cat);
+    document.getElementById('reviewOverlay').classList.add('active');
+    this._renderReviewCard();
+    this._updateReviewNav();
   },
-  renderSparksList() {
-    const filtered=this.getFilteredThoughts(), container=document.getElementById('sparkReviewList');
-    if(!filtered.length){container.innerHTML='<div class="no-sparks-msg">没有匹配的记录</div>';return;}
-    container.innerHTML=filtered.map(s=>{
+  closeReviewModal() {
+    document.getElementById('reviewOverlay').classList.remove('active');
+    document.getElementById('reviewCardContainer').style.display='';
+    document.getElementById('reviewNavRow').style.display='';
+    document.getElementById('reviewListView').style.display='none';
+    this._reviewItems=[];
+    this._reviewIndex=0;
+  },
+  toggleReviewView() {
+    if(this._reviewViewMode==='card'){
+      this._reviewViewMode='list';
+      document.getElementById('reviewToggleViewBtn').textContent='卡片模式';
+      this._renderReviewList();
+    } else {
+      this._reviewViewMode='card';
+      document.getElementById('reviewToggleViewBtn').textContent='全局浏览';
+      this._renderReviewCard();
+      this._updateReviewNav();
+    }
+  },
+  _renderReviewCard() {
+    const items=this._reviewItems, idx=this._reviewIndex;
+    if(!items||!items.length) return;
+    const s=items[idx];
+    const d=new Date(s.timestamp);
+    const typeLabel=s.type==='journal'?'随笔':s.type==='success'?'成功':'火花';
+    const catHtml=s.category?`<span style="color:var(--text3)">${this.catLabel(s.category)}</span>`:'';
+    const srcHtml=s.source?`<span style="color:var(--text3)">📎${this.esc(s.source)}</span>`:'';
+    const card=document.getElementById('reviewCard');
+    card.innerHTML=`
+      <div class="review-card-text">${this.esc(s.text)}</div>
+      <div class="review-card-meta">
+        <span class="review-card-type review-card-type-${s.type||'spark'}">${typeLabel}</span>
+        ${catHtml}${srcHtml}
+        <span>${d.toLocaleDateString('zh-CN',{month:'short',day:'numeric'})} ${d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span>
+      </div>
+    `;
+    card.style.transform=''; card.style.opacity='';
+    card.ontouchstart=(e)=>{this._swX=e.touches[0].clientX;this._swY=e.touches[0].clientY;};
+    card.ontouchend=(e)=>{
+      const dx=e.changedTouches[0].clientX-this._swX;
+      const dy=e.changedTouches[0].clientY-this._swY;
+      if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.5){
+        if(dx<0) this.nextReviewCard();
+        else this.prevReviewCard();
+      }
+    };
+    document.getElementById('reviewCardContainer').style.display='';
+    document.getElementById('reviewNavRow').style.display='';
+    document.getElementById('reviewListView').style.display='none';
+  },
+  _renderReviewList() {
+    const items=this._reviewItems;
+    document.getElementById('reviewCardContainer').style.display='none';
+    document.getElementById('reviewNavRow').style.display='none';
+    const listEl=document.getElementById('reviewListView');
+    listEl.innerHTML=items.map(s=>{
       const d=new Date(s.timestamp);
-      const catHtml=s.category?`<span class="cat-tag cat-tag-${s.category}">${this.catLabel(s.category)}</span>`:'';
-      const badge=`<span class="type-badge type-badge-${s.type||'spark'}">${s.type==='journal'?'随笔':s.type==='success'?'成功':'火花'}</span>`;
-      const srcHtml=s.source?`<span style="color:var(--text3);font-size:10px">📎${this.esc(s.source)}</span>`:'';
-      const btnHtml=s.reviewed?'<span class="btn-mark done">✓ 已回顾</span>':`<button class="btn-mark" onclick="App.openReview('${s.id}','${s.sessionId}')">回顾</button>`;
-      const noteHtml=s.reviewed&&s.reviewNote?`<div class="review-note">💭 ${this.esc(s.reviewNote)}</div>`:'';
-      return `<div class="spark-card ${s.reviewed?'reviewed':''}"><div class="spark-card-header"><div class="spark-card-text">${badge}${this.esc(s.text)}</div></div><div class="spark-card-meta">${catHtml}${srcHtml}<span>${d.toLocaleDateString('zh-CN',{month:'short',day:'numeric'})} ${d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span>${btnHtml}</div>${noteHtml}</div>`;
+      const typeLabel=s.type==='journal'?'随笔':s.type==='success'?'成功':'火花';
+      return `<div class="review-list-item"><div class="text">${this.esc(s.text)}</div><div class="meta"><span class="review-card-type review-card-type-${s.type||'spark'}">${typeLabel}</span>${s.category?'<span>'+this.catLabel(s.category)+'</span>':''}${s.source?'<span>📎'+this.esc(s.source)+'</span>':''}<span>${d.toLocaleDateString('zh-CN',{month:'short',day:'numeric'})} ${d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span></div></div>`;
     }).join('');
+    listEl.style.display='';
+  },
+  nextReviewCard() {
+    if(this._reviewIndex<this._reviewItems.length-1){
+      this._reviewIndex++;
+      this._renderReviewCard();
+      this._updateReviewNav();
+    }
+  },
+  prevReviewCard() {
+    if(this._reviewIndex>0){
+      this._reviewIndex--;
+      this._renderReviewCard();
+      this._updateReviewNav();
+    }
+  },
+  _updateReviewNav() {
+    const idx=this._reviewIndex, total=this._reviewItems.length;
+    document.getElementById('reviewPrevBtn').disabled=idx<=0;
+    document.getElementById('reviewNextBtn').disabled=idx>=total-1;
+    document.getElementById('reviewNavPos').textContent=`${idx+1} / ${total}`;
+    // Update dots
+    const dotsEl=document.getElementById('reviewNavDots');
+    let html='';
+    for(let i=0;i<Math.min(total,30);i++){
+      html+=`<div class="review-nav-dot ${i===idx?'active':''}"></div>`;
+    }
+    dotsEl.innerHTML=html;
+    const activeDot=dotsEl.querySelector('.active');
+    if(activeDot) activeDot.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
   },
 
   /* ─── Review with reflection ─── */
@@ -864,7 +1021,7 @@ const App = {
       }
     }
     document.getElementById('reviewModal').classList.remove('active'); this.state.pendingReview=null;
-    this.renderSparksReview(); this.renderSparkBadge(); this.renderHomePending();
+    this.renderReviewGrid(); this.renderSparkBadge(); this.renderHomePending();
     this.toast('💭 回顾已保存');
   },
   skipReview() {
