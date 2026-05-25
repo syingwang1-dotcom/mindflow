@@ -281,19 +281,19 @@ button{cursor:pointer;border:none;background:none;color:inherit}
     <div id="homePending"></div>
     <div id="homeSuccessToday"></div>
     <div class="success-btn-bar">
-      <button class="btn-success-add" onclick="App.openSuccessModal()">🌟 记录今天的成功</button>
+      <button class="btn-success-add" onclick="App.openSuccessModal()">记录今天的成功</button>
     </div>
     <div class="home-cards">
       <div class="journal-card" onclick="App.openJournalModal()">
         <div class="journal-card-top">
-          <div class="journal-card-icon">📝</div>
+          <div class="journal-card-icon"></div>
           <div><h2>写随笔</h2><p>记录此刻的所思所想，把心里的事写下来</p></div>
         </div>
         <div class="tag">带来源 · 沉淀思考 · 可语音</div>
       </div>
       <div class="mode-card mode-card-focus" onclick="App.startFocus()">
         <div class="mode-card-row">
-          <div class="mode-card-icon">⚡</div>
+          <div class="mode-card-icon"></div>
           <div class="mode-card-text">
             <h2>专注模式</h2>
             <p>通勤 / 学习时用。捕捉冒出来的思维火花，记下即放下。</p>
@@ -308,7 +308,7 @@ button{cursor:pointer;border:none;background:none;color:inherit}
   <div class="view" id="viewFocus">
     <div class="session-header">
       <div>
-        <div style="font-size:11px;color:var(--accent-focus);font-weight:600;letter-spacing:0.5px">⚡ 专注模式</div>
+        <div style="font-size:11px;color:var(--accent-focus);font-weight:600;letter-spacing:0.5px">专注模式</div>
         <div class="session-timer" id="focusTimer">00:00</div>
         <div class="session-timer-label">本次专注时长</div>
       </div>
@@ -353,22 +353,22 @@ button{cursor:pointer;border:none;background:none;color:inherit}
     </div>
     <div class="review-section" id="reviewPrompt">
       <div class="prompt-section">
-        <h3>🧠 小悟 · 深度复盘</h3>
+        <h3>小悟 · 深度复盘</h3>
         <div class="sub">把你在心流伴侣中记录的所有思绪交给「小悟」，它会帮你发现模式、给出反馈、提出追问。</div>
         <div style="font-size:12px;background:var(--surface2);border-radius:var(--radius-sm);padding:12px;margin-bottom:12px;line-height:1.6;color:var(--text3)">
           <strong>使用方法：</strong><br>
-          1. 点「📋 复制 Prompt（含记录）」一步到位，或先点「📋 复制全部记录」<br>
+          1. 点「 复制 Prompt（含记录）」一步到位，或先点「 复制全部记录」<br>
           2. 找一个有长记忆能力的 AI（推荐 <strong>Claude Projects</strong> 或 <strong>ChatGPT</strong>）<br>
           3. 把内容粘贴进去，小悟会自动生成深度复盘<br>
           提示：如果在 Project 中，可将 Prompt 放进 System Instructions，日后只粘贴记录即可
         </div>
         <div class="prompt-box" id="promptDisplay"></div>
         <div class="prompt-actions">
-          <button class="btn-copy" id="btnCopyPrompt" onclick="App.copyPrompt()">📋 复制 Prompt（含记录）</button>
-          <button class="btn-recommend" onclick="App.toast('推荐 Claude（claude.ai），新建 Project 后把 Prompt 贴进 System Instructions，每次复制记录贴进去即可。')">💡 推荐工具</button>
+          <button class="btn-copy" id="btnCopyPrompt" onclick="App.copyPrompt()">复制 Prompt（含记录）</button>
+          <button class="btn-recommend" onclick="App.toast('推荐 Claude（claude.ai），新建 Project 后把 Prompt 贴进 System Instructions，每次复制记录贴进去即可。')">推荐工具</button>
         </div>
         <div class="prompt-actions" style="margin-top:6px">
-          <button class="btn-export" id="btnCopyRecords" onclick="App.copyRecords()">📋 复制全部记录（按日期整理）</button>
+          <button class="btn-export" id="btnCopyRecords" onclick="App.copyRecords()">复制全部记录（按日期整理）</button>
         </div>
       </div>
     </div>
@@ -379,7 +379,7 @@ button{cursor:pointer;border:none;background:none;color:inherit}
     <div class="view-title">设置</div>
     <div class="view-sub">语录管理 · 数据管理</div>
     <div class="setting-group">
-      <h3>📖 语录库</h3>
+      <h3>语录库</h3>
       <div id="quoteList"></div>
       <div style="display:flex;gap:6px;margin-top:8px">
         <input type="text" id="newQuoteInput" placeholder="输入新的语录..." style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text);outline:none">
@@ -396,22 +396,22 @@ button{cursor:pointer;border:none;background:none;color:inherit}
   <!-- Journal modal -->
   <div class="modal-overlay" id="journalModal">
     <div class="modal">
-      <h3>📝 写随笔</h3>
-      <div class="voice-hint">🎤 可以说出来哦，点麦克风就能语音输入</div>
+      <h3>写随笔</h3>
+      <div class="voice-hint">可以说出来哦，点麦克风就能语音输入</div>
       <label>想法 / 感受</label>
       <div class="input-row">
         <textarea id="journalInput" placeholder="心里在想什么？写下来..." rows="3"></textarea>
-        <button class="voice-btn" id="journalVoiceBtn" onclick="App.startVoice('journal')" title="语音输入">🎤</button>
+        <button class="voice-btn" id="journalVoiceBtn" onclick="App.startVoice('journal')" title="语音输入">麦</button>
       </div>
       <div class="voice-status" id="journalVoiceStatus"></div>
       <label>来源（选填）</label>
       <input type="text" id="journalSource" placeholder="比如一篇文章链接、一段对话、一个念头从何而来">
       <label style="margin-top:8px">分类（选填）</label>
       <div class="category-chips">
-        <div class="chip chip-life" data-cat="life" onclick="App.selectJournalCat('life')">💕 生活心情</div>
-        <div class="chip chip-sports" data-cat="sports" onclick="App.selectJournalCat('sports')">🏃 运动</div>
-        <div class="chip chip-study" data-cat="study" onclick="App.selectJournalCat('study')">📖 学习</div>
-        <div class="chip chip-work" data-cat="work" onclick="App.selectJournalCat('work')">💼 工作</div>
+        <div class="chip chip-life" data-cat="life" onclick="App.selectJournalCat('life')">生活心情</div>
+        <div class="chip chip-sports" data-cat="sports" onclick="App.selectJournalCat('sports')">运动</div>
+        <div class="chip chip-study" data-cat="study" onclick="App.selectJournalCat('study')">学习</div>
+        <div class="chip chip-work" data-cat="work" onclick="App.selectJournalCat('work')">工作</div>
       </div>
       <div class="modal-actions">
         <button class="btn-secondary" onclick="App.closeJournalModal()">取消</button>
@@ -424,18 +424,18 @@ button{cursor:pointer;border:none;background:none;color:inherit}
   <div class="modal-overlay" id="sparkModal">
     <div class="modal">
       <h3>✦ 记下这个想法</h3>
-      <div class="voice-hint">🎤 可以说出来哦～</div>
+      <div class="voice-hint">可以说出来哦～</div>
       <div class="input-row">
         <textarea id="sparkInput" placeholder="冒了什么想法？写或说出来..." rows="3"></textarea>
-        <button class="voice-btn" id="sparkVoiceBtn" onclick="App.startVoice('spark')" title="语音输入">🎤</button>
+        <button class="voice-btn" id="sparkVoiceBtn" onclick="App.startVoice('spark')" title="语音输入">麦</button>
       </div>
       <div class="voice-status" id="sparkVoiceStatus"></div>
       <div style="font-size:12px;color:var(--text3);margin-top:6px">分类（选填）</div>
       <div class="category-chips">
-        <div class="chip chip-life" data-cat="life" onclick="App.selectSparkCat('life')">💕 生活心情</div>
-        <div class="chip chip-sports" data-cat="sports" onclick="App.selectSparkCat('sports')">🏃 运动</div>
-        <div class="chip chip-study" data-cat="study" onclick="App.selectSparkCat('study')">📖 学习</div>
-        <div class="chip chip-work" data-cat="work" onclick="App.selectSparkCat('work')">💼 工作</div>
+        <div class="chip chip-life" data-cat="life" onclick="App.selectSparkCat('life')">生活心情</div>
+        <div class="chip chip-sports" data-cat="sports" onclick="App.selectSparkCat('sports')">运动</div>
+        <div class="chip chip-study" data-cat="study" onclick="App.selectSparkCat('study')">学习</div>
+        <div class="chip chip-work" data-cat="work" onclick="App.selectSparkCat('work')">工作</div>
       </div>
       <div class="modal-actions">
         <button class="btn-secondary" onclick="App.closeSparkInput()">算了</button>
@@ -447,24 +447,24 @@ button{cursor:pointer;border:none;background:none;color:inherit}
   <!-- Success modal -->
   <div class="modal-overlay" id="successModal">
     <div class="modal">
-      <h3>🌟 记录今天的成功</h3>
-      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">哪怕很小——"今天早起了十分钟" 也是成功 ✨</div>
-      <div class="voice-hint">🎤 说出来也可以哦</div>
+      <h3>记录今天的成功</h3>
+      <div style="font-size:13px;color:var(--text2);margin-bottom:8px">哪怕很小——"今天早起了十分钟" 也是成功 </div>
+      <div class="voice-hint">说出来也可以哦</div>
       <div class="input-row">
         <textarea id="successInput" placeholder="今天做成了什么？" rows="3"></textarea>
-        <button class="voice-btn" id="successVoiceBtn" onclick="App.startVoice('success')" title="语音输入">🎤</button>
+        <button class="voice-btn" id="successVoiceBtn" onclick="App.startVoice('success')" title="语音输入">麦</button>
       </div>
       <div class="voice-status" id="successVoiceStatus"></div>
       <label>分类（选填）</label>
       <div class="category-chips">
-        <div class="chip chip-life" data-cat="life" onclick="App.selectSuccessCat('life')">💕 生活心情</div>
-        <div class="chip chip-sports" data-cat="sports" onclick="App.selectSuccessCat('sports')">🏃 运动</div>
-        <div class="chip chip-study" data-cat="study" onclick="App.selectSuccessCat('study')">📖 学习</div>
-        <div class="chip chip-work" data-cat="work" onclick="App.selectSuccessCat('work')">💼 工作</div>
+        <div class="chip chip-life" data-cat="life" onclick="App.selectSuccessCat('life')">生活心情</div>
+        <div class="chip chip-sports" data-cat="sports" onclick="App.selectSuccessCat('sports')">运动</div>
+        <div class="chip chip-study" data-cat="study" onclick="App.selectSuccessCat('study')">学习</div>
+        <div class="chip chip-work" data-cat="work" onclick="App.selectSuccessCat('work')">工作</div>
       </div>
       <div class="modal-actions">
         <button class="btn-secondary" onclick="App.closeSuccessModal()">跳过</button>
-        <button class="btn-primary" onclick="App.saveSuccess()" style="background:#34d399;color:#000">记下来 🌟</button>
+        <button class="btn-primary" onclick="App.saveSuccess()" style="background:#34d399;color:#000">记下来</button>
       </div>
     </div>
   </div>
@@ -472,7 +472,7 @@ button{cursor:pointer;border:none;background:none;color:inherit}
   <!-- Review reflection modal -->
   <div class="modal-overlay" id="reviewModal">
     <div class="modal">
-      <h3>💭 回顾这个想法</h3>
+      <h3>回顾这个想法</h3>
       <div class="modal-thought" id="reviewThought"></div>
       <label>处理这个想法时，你有什么新的思考？</label>
       <textarea id="reviewNote" placeholder="哪怕只是一句话——"想通了""有了行动方向""这个想法已经不适用了"..." rows="3"></textarea>
@@ -486,7 +486,7 @@ button{cursor:pointer;border:none;background:none;color:inherit}
   <!-- Session end modal -->
   <div class="modal-overlay" id="endModal">
     <div class="modal">
-      <h3 id="endModalTitle">⚡ 专注结束</h3>
+      <h3 id="endModalTitle">专注结束</h3>
       <div class="summary-grid">
         <div class="summary-item"><div class="num" id="endDuration">0</div><div class="label">时长</div></div>
         <div class="summary-item"><div class="num" id="endSparks">0</div><div class="label">火花</div></div>
@@ -595,19 +595,19 @@ const PROMPT_TEMPLATE = `你是「小悟」，一位温暖而敏锐的思维伙�
 
 ## 输出格式
 
-### 📊 一、思绪全景
+### 一、思绪全景
 整体概览：时间跨度、记录总数、类型分布（火花/随笔/成功）、分类分布、记录节奏。
 
-### 📈 二、时间轨迹
+### 二、时间轨迹
 纵向分析：主题和情绪的演变过程。用叙事方式呈现，有起承转合。让用户能看到自己的成长轨迹。
 
-### 🎯 三、领域聚焦
+### 三、领域聚焦
 横向分析：不同生活领域的分布与关联。指出哪个领域是用户的思维重心，以及各领域之间的相互影响。
 
-### 🔍 四、模式发现
+### 四、模式发现
 模式识别：重复主题、认知模式、情绪线索。既要指出优势，也要温和地点出可能的盲区。
 
-### 💬 五、反馈与建议
+### 五、反馈与建议
 
 **做得好的地方（基于事实的具体肯定）：**
 - 具体指出用户做得好的方面
@@ -624,7 +624,7 @@ const PROMPT_TEMPLATE = `你是「小悟」，一位温暖而敏锐的思维伙�
 - 与用户的实际记录相关
 - 建议一个小到不可能失败的下一步行动
 
-### ❓ 六、三个追问
+### 六、三个追问
 提出 3 个有启发性的问题，引导用户进一步思考：
 - 问题应该能帮用户抵达更深层的自我觉察
 - 问题要具体，结合用户的实际记录内容
@@ -712,7 +712,7 @@ const App = {
     this.state.settings._qt=now; this.state.settings._qi=idx; this.saveData();
     return {text:qs[idx], idx};
   },
-  renderQuote() { document.getElementById('quoteDisplay').textContent = this.getDailyQuote().text||'✨ 添加你的第一句语录吧'; },
+  renderQuote() { document.getElementById('quoteDisplay').textContent = this.getDailyQuote().text||'添加你的第一句语录吧'; },
 
   /* ─── Daily Success ─── */
   checkDailySuccess() {
@@ -735,12 +735,12 @@ const App = {
     this.saveThought({type:'success',text,category:this.state.successCategory,source:''});
     document.getElementById('successInput').value=''; this.closeSuccessModal();
     this.renderHomeSuccess(); this.renderSparkBadge();
-    this.toast('🌟 成功已记录！');
+    this.toast('成功已记录！');
   },
   renderHomeSuccess() {
     const el = document.getElementById('homeSuccessToday');
     const td = this.getTodaySuccesses();
-    el.innerHTML = td.length ? `<div class="success-today"><div class="success-today-top"><span>🌟 今天的成功</span><span style="font-size:11px;color:var(--text3)">${td.length} 条</span></div>${td.map(s=>`<div class="success-today-item">✦ ${this.esc(s.text)}</div>`).join('')}</div>` : '';
+    el.innerHTML = td.length ? `<div class="success-today"><div class="success-today-top"><span>今天的成功</span><span style="font-size:11px;color:var(--text3)">${td.length} 条</span></div>${td.map(s=>`<div class="success-today-item">✦ ${this.esc(s.text)}</div>`).join('')}</div>` : '';
   },
   getTodaySuccesses() { return this.getAllThoughts().filter(s=>s.type==='success'&&new Date(s.timestamp).toDateString()===new Date().toDateString()); },
 
@@ -760,7 +760,7 @@ const App = {
     this.saveThought({type:'journal',text,category:this.state.journalCategory,source:src});
     document.getElementById('journalInput').value=''; document.getElementById('journalSource').value='';
     this.closeJournalModal(); this.renderHomePending(); this.renderSparkBadge();
-    this.toast('📝 随笔已保存');
+    this.toast('随笔已保存');
   },
 
   /* ─── Unified thought storage ─── */
@@ -805,7 +805,7 @@ const App = {
   selectSparkCat(cat) { this.state.sparkCategory=cat===this.state.sparkCategory?null:cat; document.querySelectorAll('#sparkModal .category-chips .chip').forEach(c=>c.classList.toggle('active',c.dataset.cat===this.state.sparkCategory)); },
   saveSpark() {
     const text=document.getElementById('sparkInput').value.trim(); if(!text){this.closeSparkInput();return;}
-    if(this.state.currentSession) { this.state.currentSession.sparks.push({id:Date.now().toString(36),type:'spark',text,category:this.state.sparkCategory,source:'',timestamp:new Date().toISOString(),reviewed:false,reviewedAt:null,reviewNote:''}); this.renderSparkList(); this.toast('✨ 记下了'); }
+    if(this.state.currentSession) { this.state.currentSession.sparks.push({id:Date.now().toString(36),type:'spark',text,category:this.state.sparkCategory,source:'',timestamp:new Date().toISOString(),reviewed:false,reviewedAt:null,reviewNote:''}); this.renderSparkList(); this.toast('记下了'); }
     this.closeSparkInput();
   },
   renderSparkList() {
@@ -823,15 +823,15 @@ const App = {
     const btnId=mode==='spark'?'sparkVoiceBtn':mode==='journal'?'journalVoiceBtn':'successVoiceBtn';
     const stsId=mode==='spark'?'sparkVoiceStatus':mode==='journal'?'journalVoiceStatus':'successVoiceStatus';
     const inpId=mode==='spark'?'sparkInput':mode==='journal'?'journalInput':'successInput';
-    document.getElementById(btnId).classList.add('recording'); document.getElementById(btnId).textContent='⏺';
-    document.getElementById(stsId).textContent='🎤 正在听，请说...';
-    r.onresult=(e)=>{ const t=e.results[0][0].transcript; const inp=document.getElementById(inpId); inp.value=inp.value?inp.value+'。'+t:t; inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,180)+'px'; document.getElementById(stsId).textContent='✅ '+t; };
-    r.onerror=()=>{ document.getElementById(stsId).textContent='❌ 识别失败，请重试'; this.stopVoice(); };
+    document.getElementById(btnId).classList.add('recording'); document.getElementById(btnId).textContent='■';
+    document.getElementById(stsId).textContent='正在听，请说...';
+    r.onresult=(e)=>{ const t=e.results[0][0].transcript; const inp=document.getElementById(inpId); inp.value=inp.value?inp.value+'。'+t:t; inp.style.height='auto'; inp.style.height=Math.min(inp.scrollHeight,180)+'px'; document.getElementById(stsId).textContent='✓ '+t; };
+    r.onerror=()=>{ document.getElementById(stsId).textContent='识别失败，请重试'; this.stopVoice(); };
     r.onend=()=>{ this.stopVoice(); };
     this.state.recording={mode,recognition:r,btnId,stsId}; r.start();
   },
   stopVoice() {
-    if(this.state.recording){ try{this.state.recording.recognition.stop()}catch(e){} document.getElementById(this.state.recording.btnId).classList.remove('recording'); const s=document.getElementById(this.state.recording.stsId); if(s&&s.textContent.startsWith('🎤')) s.textContent=''; document.getElementById(this.state.recording.btnId).textContent='🎤'; this.state.recording=null; }
+    if(this.state.recording){ try{this.state.recording.recognition.stop()}catch(e){} document.getElementById(this.state.recording.btnId).classList.remove('recording'); const s=document.getElementById(this.state.recording.stsId); if(s) s.textContent=''; document.getElementById(this.state.recording.btnId).textContent='麦'; this.state.recording=null; }
   },
 
   /* ─── Navigation ─── */
@@ -931,7 +931,7 @@ const App = {
     const d=new Date(s.timestamp);
     const typeLabel=s.type==='journal'?'随笔':s.type==='success'?'成功':'火花';
     const catHtml=s.category?`<span style="color:var(--text3)">${this.catLabel(s.category)}</span>`:'';
-    const srcHtml=s.source?`<span style="color:var(--text3)">📎${this.esc(s.source)}</span>`:'';
+    const srcHtml=s.source?`<span style="color:var(--text3)">${this.esc(s.source)}</span>`:'';
     const card=document.getElementById('reviewCard');
     card.innerHTML=`
       <div class="review-card-text">${this.esc(s.text)}</div>
@@ -963,7 +963,7 @@ const App = {
     listEl.innerHTML=items.map(s=>{
       const d=new Date(s.timestamp);
       const typeLabel=s.type==='journal'?'随笔':s.type==='success'?'成功':'火花';
-      return `<div class="review-list-item"><div class="text">${this.esc(s.text)}</div><div class="meta"><span class="review-card-type review-card-type-${s.type||'spark'}">${typeLabel}</span>${s.category?'<span>'+this.catLabel(s.category)+'</span>':''}${s.source?'<span>📎'+this.esc(s.source)+'</span>':''}<span>${d.toLocaleDateString('zh-CN',{month:'short',day:'numeric'})} ${d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span></div></div>`;
+      return `<div class="review-list-item"><div class="text">${this.esc(s.text)}</div><div class="meta"><span class="review-card-type review-card-type-${s.type||'spark'}">${typeLabel}</span>${s.category?'<span>'+this.catLabel(s.category)+'</span>':''}${s.source?'<span>'+this.esc(s.source)+'</span>':''}<span>${d.toLocaleDateString('zh-CN',{month:'short',day:'numeric'})} ${d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span></div></div>`;
     }).join('');
     listEl.style.display='';
   },
@@ -988,7 +988,7 @@ const App = {
     document.getElementById('reviewNavPos').textContent=`${idx+1} / ${total}`;
     // Update dots
     const dotsEl=document.getElementById('reviewNavDots');
-    let html='';
+    let ;
     for(let i=0;i<Math.min(total,30);i++){
       html+=`<div class="review-nav-dot ${i===idx?'active':''}"></div>`;
     }
@@ -1022,7 +1022,7 @@ const App = {
     }
     document.getElementById('reviewModal').classList.remove('active'); this.state.pendingReview=null;
     this.renderReviewGrid(); this.renderSparkBadge(); this.renderHomePending();
-    this.toast('💭 回顾已保存');
+    this.toast('回顾已保存');
   },
   skipReview() {
     document.getElementById('reviewModal').classList.remove('active'); this.state.pendingReview=null;
@@ -1035,10 +1035,10 @@ const App = {
     const groups = {};
     all.forEach(t => { const d=new Date(t.timestamp).toLocaleDateString('zh-CN',{year:'numeric',month:'long',day:'numeric',weekday:'short'}); if(!groups[d]) groups[d]=[]; groups[d].push(t); });
     const catOrder=['life','sports','study','work','success','uncat'];
-    const catLabels={life:'💕 生活心情',sports:'🏃 运动',study:'📖 学习',work:'💼 工作',success:'🌟 成功',uncat:'📋 其他'};
+    const catLabels={life:' 生活心情',sports:' 运动',study:' 学习',work:' 工作',success:' 成功',uncat:' 其他'};
     let text='===== 思绪记录 =====\n\n';
     Object.entries(groups).forEach(([date,items])=>{
-      text+=`📅 ${date}\n${'—'.repeat(18)}\n`;
+      text+=` ${date}\n${'—'.repeat(18)}\n`;
       const catGroups={};
       items.forEach(t=>{
         let k=t.type==='success'?'success':t.category||'uncat';
@@ -1049,24 +1049,24 @@ const App = {
         if(!catGroups[k]) return;
         text+=`\n${catLabels[k]}\n`;
         catGroups[k].reverse().forEach(t=>{
-          const tl=t.type==='spark'?'⚡ ':t.type==='journal'?'📝 ':'';
+          const tl=t.type==='spark'?' ':t.type==='journal'?' ':'';
           const src=t.source?`（来源：${t.source}）`:'';
-          text+=`  ${tl}${t.text}${src?'\n    '+src:''}\n`;
+          text+=` ${tl}${t.text}${src?'\n '+src:''}\n`;
         });
       });
       text+='\n';
     });
-    this.copyText(text).then(()=>{ const b=document.getElementById('btnExportAll'); b.textContent='✅ 已复制！'; b.classList.add('copied'); setTimeout(()=>{b.textContent='📋 复制全部（按日期整理）';b.classList.remove('copied');},2000); this.toast(`已复制 ${all.length} 条记录`); });
+    this.copyText(text).then(()=>{ const b=document.getElementById('btnExportAll'); b.textContent='已复制！'; b.classList.add('copied'); setTimeout(()=>{b.textContent=' 复制全部（按日期整理）';b.classList.remove('copied');},2000); this.toast(`已复制 ${all.length} 条记录`); });
   },
   exportFlat() {
     const all=this.getAllThoughts(); if(!all.length){this.toast('还没有记录');return;}
     const cats={spark:[],journal:[],success:[]};
     all.forEach(t=>{ const k=t.type||'spark'; if(cats[k]) cats[k].push(t); });
     let text='===== 思绪摘要 =====\n\n';
-    if(cats.success.length){text+=`🌟 成功记录（${cats.success.length}条）\n`;cats.success.slice(0,30).forEach(t=>{text+=`  • ${t.text}\n`;});text+='\n';}
-    if(cats.journal.length){text+=`📝 随笔（${cats.journal.length}条）\n${'—'.repeat(12)}\n`;cats.journal.slice(0,50).forEach(t=>{const c=t.category?`[${this.catLabel(t.category)}]`:'';text+=`${c} ${t.text}\n`;});text+='\n';}
-    if(cats.spark.length){text+=`⚡ 火花（${cats.spark.length}条）\n${'—'.repeat(12)}\n`;cats.spark.slice(0,80).forEach(t=>{const c=t.category?`[${this.catLabel(t.category)}]`:'';text+=`${c} ${t.text}\n`;});text+='\n';}
-    this.copyText(text).then(()=>{ const b=document.getElementById('btnExportFlat'); b.textContent='✅ 已复制！'; b.classList.add('copied'); setTimeout(()=>{b.textContent='📋 复制摘要（按分类精简）';b.classList.remove('copied');},2000); this.toast(`已复制 ${all.length} 条记录摘要`); });
+    if(cats.success.length){text+=`成功记录（${cats.success.length}条）\n`;cats.success.slice(0,30).forEach(t=>{text+=` • ${t.text}\n`;});text+='\n';}
+    if(cats.journal.length){text+=`随笔（${cats.journal.length}条）\n${'—'.repeat(12)}\n`;cats.journal.slice(0,50).forEach(t=>{const c=t.category?`[${this.catLabel(t.category)}]`:'';text+=`${c} ${t.text}\n`;});text+='\n';}
+    if(cats.spark.length){text+=`火花（${cats.spark.length}条）\n${'—'.repeat(12)}\n`;cats.spark.slice(0,80).forEach(t=>{const c=t.category?`[${this.catLabel(t.category)}]`:'';text+=`${c} ${t.text}\n`;});text+='\n';}
+    this.copyText(text).then(()=>{ const b=document.getElementById('btnExportFlat'); b.textContent='已复制！'; b.classList.add('copied'); setTimeout(()=>{b.textContent=' 复制摘要（按分类精简）';b.classList.remove('copied');},2000); this.toast(`已复制 ${all.length} 条记录摘要`); });
   },
 
   /* ─── Review page ─── */
@@ -1082,27 +1082,27 @@ const App = {
     const s=this.state.sessions, total=s.length, totalMin=Math.round(s.reduce((sm,ses)=>sm+ses.duration,0)/60);
     const all=this.getAllThoughts(), thoughts=all.length, successes=all.filter(t=>t.type==='success').length;
     document.getElementById('statsGrid').innerHTML=`<div class="stat-card"><div class="stat-num">${total}</div><div class="stat-label">总次数</div></div><div class="stat-card"><div class="stat-num">${totalMin}<span style="font-size:14px;font-weight:400;color:var(--text3)"> 分钟</span></div><div class="stat-label">总时长</div></div><div class="stat-card"><div class="stat-num">${thoughts}</div><div class="stat-label">思绪</div></div><div class="stat-card"><div class="stat-num">${successes}</div><div class="stat-label">成功</div></div>`;
-    const cats=[{k:'life',l:'💕 生活心情',c:'var(--cat-life)'},{k:'sports',l:'🏃 运动',c:'var(--cat-sports)'},{k:'study',l:'📖 学习',c:'var(--cat-study)'},{k:'work',l:'💼 工作',c:'var(--cat-work)'}];
+    const cats=[{k:'life',l:' 生活心情',c:'var(--cat-life)'},{k:'sports',l:' 运动',c:'var(--cat-sports)'},{k:'study',l:' 学习',c:'var(--cat-study)'},{k:'work',l:' 工作',c:'var(--cat-work)'}];
     const ccnt={}; all.forEach(sp=>{const c=sp.category||'uncat';ccnt[c]=(ccnt[c]||0)+1;});
     if(all.length>0) {
       document.getElementById('categoryBreakdown').innerHTML=`<div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:8px">思绪分类分布</div><div style="display:flex;flex-direction:column;gap:5px">${cats.map(c=>{const cnt=ccnt[c.k]||0;const pct=Math.round(cnt/all.length*100);return cnt>0?`<div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="flex:0 0 80px;color:var(--text2)">${c.l}</span><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${c.c};border-radius:3px"></div></div><span style="flex:0 0 40px;text-align:right;color:var(--text3)">${cnt}</span></div>`:'';}).join('')}${(ccnt.uncat||0)>0?`<div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="flex:0 0 80px;color:var(--text3)">未分类</span><div style="flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${Math.round((ccnt.uncat||0)/all.length*100)}%;background:var(--text3);border-radius:3px"></div></div><span style="flex:0 0 40px;text-align:right;color:var(--text3)">${ccnt.uncat||0}</span></div>`:''}</div>`;
     } else { document.getElementById('categoryBreakdown').innerHTML=''; }
     const recent=[...s].reverse().slice(0,20);
-    document.getElementById('sessionList').innerHTML=recent.length?recent.map(ses=>{const d=new Date(ses.startTime);return `<div class="session-item"><div class="session-item-left"><div class="session-item-mode ${ses.mode}">${ses.mode==='focus'?'⚡ 专注':'📝 随笔'}</div><div class="session-item-date">${d.toLocaleDateString('zh-CN',{month:'short',day:'numeric',weekday:'short'})} ${d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</div></div><div class="session-item-right"><div class="session-item-duration">${ses.mode==='journal'?`${(ses.sparks||[]).length} 条`:this.formatTime(ses.duration)}</div></div></div>`;}).join(''):'<div style="text-align:center;color:var(--text3);font-size:13px;padding:20px">还没有记录</div>';
+    document.getElementById('sessionList').innerHTML=recent.length?recent.map(ses=>{const d=new Date(ses.startTime);return `<div class="session-item"><div class="session-item-left"><div class="session-item-mode ${ses.mode}">${ses.mode==='focus'?' 专注':' 随笔'}</div><div class="session-item-date">${d.toLocaleDateString('zh-CN',{month:'short',day:'numeric',weekday:'short'})} ${d.toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</div></div><div class="session-item-right"><div class="session-item-duration">${ses.mode==='journal'?`${(ses.sparks||[]).length} 条`:this.formatTime(ses.duration)}</div></div></div>`;}).join(''):'<div style="text-align:center;color:var(--text3);font-size:13px;padding:20px">还没有记录</div>';
   },
   renderInsights() {
     const s=this.state.sessions, con=document.getElementById('insightContainer');
     if(!s.length){con.innerHTML='<div style="text-align:center;color:var(--text3);font-size:13px;padding:30px">累积更多数据后，我会为你分析行为模式 ✦</div>';return;}
     const all=this.getAllThoughts(), focusSessions=s.filter(s=>s.mode==='focus'), ins=[];
-    if(all.length){const bt={};all.forEach(t=>{const k=t.type||'spark';bt[k]=(bt[k]||0)+1;});ins.push({icon:'📊',title:'记录概览',body:`共 ${all.length} 条记录，火花 ${bt.spark||0} 条、随笔 ${bt.journal||0} 条、成功 ${bt.success||0} 条。`});}
+    if(all.length){const bt={};all.forEach(t=>{const k=t.type||'spark';bt[k]=(bt[k]||0)+1;});ins.push({icon:'',title:'记录概览',body:`共 ${all.length} 条记录，火花 ${bt.spark||0} 条、随笔 ${bt.journal||0} 条、成功 ${bt.success||0} 条。`});}
     const journals=all.filter(t=>t.type==='journal');
-    if(journals.length>=2){const cc={};journals.forEach(j=>{if(j.category)cc[j.category]=(cc[j.category]||0)+1;});const tc=Object.entries(cc).sort((a,b)=>b[1]-a[1])[0];if(tc)ins.push({icon:'🎯',title:'随笔焦点',body:`随笔集中在「${this.catLabel(tc[0])}」领域（${tc[1]}篇），这是你日常最关注的方面。`});}
-    const sc=all.filter(t=>t.type==='success'); if(sc.length){const ds=new Set(sc.map(s=>new Date(s.timestamp).toDateString())).size;ins.push({icon:'🌟',title:'成功记录',body:`记录了 ${sc.length} 次成功，分布在 ${ds} 天。`});}
-    const allS=all.filter(t=>t.type==='spark'); if(allS.length){const rv=allS.filter(s=>s.reviewed).length,rt=Math.round(rv/allS.length*100);ins.push({icon:rt>50?'✅':'⏳',title:'火花回顾率',body:rt>50?`已回顾 ${rv}/${allS.length}（${rt}%）。`:`已回顾 ${rv}/${allS.length}（${rt}%）。抽空回看。`});}
-    if(focusSessions.length){const fs=focusSessions.flatMap(s=>s.sparks||[]);ins.push({icon:'⚡',title:'专注发散比',body:`专注模式下平均每次产生 ${(fs.length/focusSessions.length).toFixed(1)} 个思维火花。`});}
+    if(journals.length>=2){const cc={};journals.forEach(j=>{if(j.category)cc[j.category]=(cc[j.category]||0)+1;});const tc=Object.entries(cc).sort((a,b)=>b[1]-a[1])[0];if(tc)ins.push({icon:'',title:'随笔焦点',body:`随笔集中在「${this.catLabel(tc[0])}」领域（${tc[1]}篇），这是你日常最关注的方面。`});}
+    const sc=all.filter(t=>t.type==='success'); if(sc.length){const ds=new Set(sc.map(s=>new Date(s.timestamp).toDateString())).size;ins.push({icon:'',title:'成功记录',body:`记录了 ${sc.length} 次成功，分布在 ${ds} 天。`});}
+    const allS=all.filter(t=>t.type==='spark'); if(allS.length){const rv=allS.filter(s=>s.reviewed).length,rt=Math.round(rv/allS.length*100);ins.push({icon:rt>50?'':'',title:'火花回顾率',body:rt>50?`已回顾 ${rv}/${allS.length}（${rt}%）。`:`已回顾 ${rv}/${allS.length}（${rt}%）。抽空回看。`});}
+    if(focusSessions.length){const fs=focusSessions.flatMap(s=>s.sparks||[]);ins.push({icon:'',title:'专注发散比',body:`专注模式下平均每次产生 ${(fs.length/focusSessions.length).toFixed(1)} 个思维火花。`});}
     const ts=s.filter(s=>s.mode!=='journal').map(s=>new Date(s.startTime).getHours());
-    if(ts.length){const c=Array(24).fill(0);ts.forEach(h=>{if(h>=0&&h<24)c[h]++;});const pk=c.indexOf(Math.max(...c));if(pk>0)ins.push({icon:'🕐',title:'活跃时段',body:`倾向于在 ${pk<6?'深夜':pk<12?'上午':pk<18?'下午':'晚上'}（${pk}:00）使用工具。`});}
-    const kw=this.extractKeywords([...s.flatMap(s=>(s.sparks||[]).map(sp=>sp.text))]); if(kw.length>0)ins.push({icon:'🔍',title:'热点关键词',body:`「${kw.slice(0,5).join('」「」')}」反复出现。`});
+    if(ts.length){const c=Array(24).fill(0);ts.forEach(h=>{if(h>=0&&h<24)c[h]++;});const pk=c.indexOf(Math.max(...c));if(pk>0)ins.push({icon:'',title:'活跃时段',body:`倾向于在 ${pk<6?'深夜':pk<12?'上午':pk<18?'下午':'晚上'}（${pk}:00）使用工具。`});}
+    const kw=this.extractKeywords([...s.flatMap(s=>(s.sparks||[]).map(sp=>sp.text))]); if(kw.length>0)ins.push({icon:'',title:'热点关键词',body:`「${kw.slice(0,5).join('」「」')}」反复出现。`});
     con.innerHTML=ins.map(i=>`<div class="insight-card"><div class="insight-icon">${i.icon}</div><div class="insight-title">${i.title}</div><div class="insight-body">${i.body}</div></div>`).join('');
   },
   extractKeywords(texts) {
@@ -1123,9 +1123,9 @@ const App = {
     });
     let text = '\n\n===== 我的记录 =====\n\n';
     Object.entries(groups).forEach(([date, items]) => {
-      text += `📅 ${date}\n${'─'.repeat(20)}\n`;
+      text += ` ${date}\n${'─'.repeat(20)}\n`;
       items.reverse().forEach(t => {
-        const tl = t.type==='journal'?'📝随笔':t.type==='success'?'🌟成功':'⚡火花';
+        const tl = t.type==='journal'?'随笔':t.type==='success'?'成功':'火花';
         const c = t.category ? ` [${this.catLabel(t.category)}]` : '';
         const s = t.source ? `（来源：${t.source}）` : '';
         const r = t.reviewed ? ' ✓' : '';
@@ -1137,13 +1137,13 @@ const App = {
   async copyPrompt() {
     const all=this.getAllThoughts();
     await this.copyText(PROMPT_TEMPLATE + this.formatRecordsForPrompt(all));
-    const btn=document.getElementById('btnCopyPrompt');btn.textContent='✅ 已复制！';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 复制 Prompt（含记录）';btn.classList.remove('copied');},2000);
+    const btn=document.getElementById('btnCopyPrompt');btn.textContent=' 已复制！';btn.classList.add('copied');setTimeout(()=>{btn.textContent=' 复制 Prompt（含记录）';btn.classList.remove('copied');},2000);
     this.toast(`Prompt + ${all.length} 条记录已复制`);
   },
   async copyRecords() {
     const all=this.getAllThoughts();
     await this.copyText(this.formatRecordsForPrompt(all));
-    const btn=document.getElementById('btnCopyRecords');if(btn){btn.textContent='✅ 已复制！';btn.classList.add('copied');setTimeout(()=>{btn.textContent='📋 复制全部记录（按日期整理）';btn.classList.remove('copied');},2000);}
+    const btn=document.getElementById('btnCopyRecords');if(btn){btn.textContent=' 已复制！';btn.classList.add('copied');setTimeout(()=>{btn.textContent=' 复制全部记录（按日期整理）';btn.classList.remove('copied');},2000);}
     this.toast(`已复制 ${all.length} 条记录`);
   },
 
@@ -1155,7 +1155,7 @@ const App = {
     if(!this.state.settings.quotes.length){ql.innerHTML='<div style="font-size:12px;color:var(--text3);padding:8px">暂无语录</div>';return;}
     ql.innerHTML=this.state.settings.quotes.map((q,i)=>`<div class="quote-item"><span class="q-text">${i+1}. ${this.esc(q)}</span><span class="q-del" onclick="App.deleteQuoteSetting(${i})">✕</span></div>`).join('');
   },
-  deleteQuoteSetting(i){this.state.settings.quotes.splice(i,1);if(!this.state.settings.quotes.length)this.state.settings.quotes=['✨ 添加你的第一句语录'];this.saveData();this.renderSettings();this.renderQuote();},
+  deleteQuoteSetting(i){this.state.settings.quotes.splice(i,1);if(!this.state.settings.quotes.length)this.state.settings.quotes=['添加你的第一句语录'];this.saveData();this.renderSettings();this.renderQuote();},
   addQuote(){const inp=document.getElementById('newQuoteInput'),t=inp.value.trim();if(!t)return;this.state.settings.quotes.push(t);this.saveData();inp.value='';this.renderSettings();this.renderQuote();this.toast('语录已添加');},
   clearAllData(){if(confirm('确定清除？语录会保留。')){const q=this.state.settings.quotes;this.state.sessions=[];this.state.settings={quotes:q||DEFAULT_QUOTES};this.saveData();this.renderSettings();this.renderHomePending();this.renderSparkBadge();this.renderHomeSuccess();this.toast('数据已清除');}},
 
