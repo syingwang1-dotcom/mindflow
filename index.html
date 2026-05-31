@@ -353,6 +353,102 @@ button{cursor:pointer;border:none;background:none;color:inherit}
 @media (prefers-reduced-motion: reduce) {
   *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.2s!important}
 }
+
+/* === DYNAMIC ANIMATIONS === */
+
+/* View transitions — new views fade+slide in */
+.view-enter {
+  animation: view-enter-anim 0.35s ease-out;
+}
+@keyframes view-enter-anim {
+  0% { opacity: 0; transform: translateY(8px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Staggered entrance for view children — cascade in one by one */
+.view-enter > * {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: stagger-in 0.35s ease-out forwards;
+}
+.view-enter > *:nth-child(2) { animation-delay: 0.05s; }
+.view-enter > *:nth-child(3) { animation-delay: 0.10s; }
+.view-enter > *:nth-child(4) { animation-delay: 0.15s; }
+.view-enter > *:nth-child(5) { animation-delay: 0.20s; }
+@keyframes stagger-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Brass shimmer — flowing light across metallic buttons */
+.btn-primary, .btn-copy {
+  background-size: 200% 100%;
+  transition: transform .2s ease-out, box-shadow .3s ease-out;
+}
+.btn-primary:hover, .btn-copy:hover {
+  animation: brass-shimmer 2.5s ease-in-out infinite;
+}
+@keyframes brass-shimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* Card hover lift — subtle 3D depth on interactive cards */
+.journal-card, .mode-card, .pending-card, .stat-card,
+.insight-card, .review-grid-item, .session-item {
+  transition: transform .2s ease-out, box-shadow .25s ease-out, border-color .25s ease-out;
+}
+.journal-card:hover, .mode-card:hover, .pending-card:hover,
+.review-grid-item:hover, .session-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+/* Button press — tactile feedback */
+.btn-primary:active, .btn-copy:active, .btn-secondary:active,
+.btn-add:active, .btn-export:active, .btn-ghost:active {
+  transform: scale(0.97);
+}
+
+/* Enhanced spark button pulse — smoother breathing ring */
+.spark-btn .pulse {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Quote fade-in each time it refreshes */
+.quote-fade {
+  animation: quote-fade 0.5s ease-out;
+}
+@keyframes quote-fade {
+  0% { opacity: 0; transform: translateY(3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Toast slide-up entrance */
+.toast.show {
+  animation: toast-in 0.3s ease-out;
+}
+@keyframes toast-in {
+  0% { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* Nav icon subtle hover scale */
+.nav-btn .nav-icon {
+  transition: transform .2s ease-out;
+}
+.nav-btn:hover .nav-icon {
+  transform: scale(1.1);
+}
+
+/* Nav badge pop-in */
+.nav-badge {
+  animation: badge-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes badge-pop {
+  0% { transform: translateX(calc(50% + 16px)) scale(0); }
+  100% { transform: translateX(calc(50% + 16px)) scale(1); }
+}
 </style>
 </head>
 <body>
@@ -363,7 +459,7 @@ button{cursor:pointer;border:none;background:none;color:inherit}
 
 <div class="app" id="app">
   <!-- Home -->
-  <div class="view active" id="viewHome">
+  <div class="view active view-enter" id="viewHome">
     <div class="home-header">
       <h1>心流伴侣</h1>
       <div class="sub">MindFlow Companion</div>
@@ -799,7 +895,13 @@ const App = {
     this.state.settings._qt=now; this.state.settings._qi=idx; this.saveData();
     return {text:qs[idx], idx};
   },
-  renderQuote() { document.getElementById('quoteDisplay').textContent = this.getDailyQuote().text||'添加你的第一句语录吧'; },
+  renderQuote() {
+    const el=document.getElementById('quoteDisplay');
+    el.textContent = this.getDailyQuote().text||'添加你的第一句语录吧';
+    el.classList.remove('quote-fade');
+    void el.offsetWidth; // force reflow to restart animation
+    el.classList.add('quote-fade');
+  },
 
   /* --- Daily Success --- */
   checkDailySuccess() {
@@ -924,14 +1026,35 @@ const App = {
   /* --- Navigation --- */
   navigate(viewId) {
     if(this.state.currentSession) return;
-    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-    document.getElementById(viewId).classList.add('active');
-    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===viewId));
+    const prev=this.state.currentView;
+    if(prev===viewId) return;
+    const prevEl=document.getElementById(prev);
+    const nextEl=document.getElementById(viewId);
+    if(!nextEl) return;
+
+    // Exit current view — remove active, strip animation class for re-entrance
+    if(prevEl) {
+      prevEl.classList.remove('active','view-enter');
+    }
+
+    // Enter new view with entrance animation
+    nextEl.classList.add('active','view-enter');
     this.state.currentView=viewId;
+
+    // Update nav
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===viewId));
+
+    // Render content
     if(viewId==='viewReview') { document.getElementById(viewId).scrollTop=0; this.renderReview(); }
     if(viewId==='viewSettings') this.renderSettings();
     if(viewId==='viewHome'){this.renderHomePending();this.renderHomeSuccess();this.renderQuote();}
     if(viewId==='viewSparks') this.renderReviewGrid();
+
+    // Clean up animation class after it finishes so re-entering re-triggers
+    setTimeout(()=>{
+      const el=document.getElementById(viewId);
+      if(el) el.classList.remove('view-enter');
+    }, 500);
   },
 
   /* --- Home --- */
